@@ -23,24 +23,28 @@ rule all:
         # Subsequent target rules can be specified below. They should start with all_*.
 #rule correct_SRA_headers
 
+def swap_reads(wildcards):
+#Necessary to swap the paired-end reads for tpp (only applies to certain samples)
+    if wildcards.sample in SWAP_PAIR_SAMPLES:
+        return ['input/'+wildcards.sample+'_2.fastq','input/'+wildcards.sample+'_1.fastq']
+    else:
+        return ['input/'+wildcards.sample+'_1.fastq','input/'+wildcards.sample+'_2.fastq']
+
 rule map_reads:
     conda:
         "envs/tpp_env.yml"
     input:
         "input/H37Rv.fa",
-        "input/{sample}_1.fastq",
-        "input/{sample}_2.fastq"
+        swap_reads
     output:
         "output/{sample}.wig"
+    wildcard_constraints:
+        sample='|'.join(SWAP_PAIR_SAMPLES)
     shell:
         #Compute bwa location to give to tpp
         "BWA=$(which bwa)\n"+
         "echo $BWA\n"+
-        if {sample} in SWAP_PAIR_SAMPLES:
-            #If the order or the _1 and _2 paired reads should be swapped for tpp.
-            "tpp -himar1 -bwa $BWA -bwa-alg aln -ref {input[0]} -replicon-ids "+','.join(REPLICONS)+" -reads1 {input[2]} -reads2 {input[1]} -window-size 6 -primer AACCTGTTA -mismatches 1 -output output/{wildcards.sample}"
-        else:
-            "tpp -himar1 -bwa $BWA -bwa-alg aln -ref {input[0]} -replicon-ids "+','.join(REPLICONS)+" -reads1 {input[1]} -reads2 {input[2]} -window-size 6 -primer AACCTGTTA -mismatches 1 -output output/{wildcards.sample}"
+        "tpp -himar1 -bwa $BWA -bwa-alg aln -ref {input[0]} -replicon-ids "+','.join(REPLICONS)+" -reads1 {input[2]} -reads2 {input[1]} -window-size 6 -primer AACCTGTTA -mismatches 1 -output output/{wildcards.sample}"
 
 rule convert_to_csv:
     conda:
