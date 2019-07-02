@@ -38,8 +38,6 @@ rule map_reads:
         swap_reads
     output:
         "output/{sample}.wig"
-    wildcard_constraints:
-        sample='|'.join(SWAP_PAIR_SAMPLES)
     shell:
         #Compute bwa location to give to tpp
         "BWA=$(which bwa)\n"+
