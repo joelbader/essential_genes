@@ -64,7 +64,8 @@ rule run_tifa:
     conda:
         "envs/tifa.yml"
     input:
-        "output/MAC109_raw_counts.csv" 
+        "output/MAC109_raw_counts.csv",
+        "output/LPI_sites.csv"
     output:
         "output/Attenuated_Mutants_MAC109.csv"
     shell:

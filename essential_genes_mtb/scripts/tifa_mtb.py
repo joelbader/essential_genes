@@ -13,7 +13,7 @@ def main():
     out_fold = 'output/'
     
     #Read in csv files of counts
-    csv = 'H37Rv_raw_counts.csv'
+    csv = 'output/H37Rv_raw_counts.csv'
     
     #Initializations
     c_df = pd.read_csv(csv,dtype={'regulatory_class':str,'bound_moiety':str})
@@ -23,7 +23,7 @@ def main():
     #Rename columns for ease of use and compatibility
     c_df = c_df.rename(columns={'unique_identifier (locus_tag or record_id_start_end_strand)':'uid'})
 
-    special_site_files = ['LPI_sites.csv']
+    special_site_files = ['output/LPI_sites.csv']
 
     process_data(samp_names,c_df,special_site_files,out_fold,output_csv_name,plots_on = False) 
 
