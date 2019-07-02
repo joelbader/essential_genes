@@ -1,0 +1,73 @@
+# The main entry point of your workflow.
+SAMPLES = ['SRX5532235','SRX5532236','SRX5532237','SRX5532238','SRX5532239']
+#SAMPLES = ['Test1','Test2','Test3','Test4','Test5']
+REPLICONS = ['CP029332','CP029333','CP029334'] #Order of these affects the order they are printed.
+
+with open("output/PREFIXES_FOR_CONVERSION.txt",'w') as fp:
+    fp.write('\n'.join(['output/'+s for s in SAMPLES])) #Necessary for post processing wig files
+
+# After configuring, running snakemake -n in a clone of this repository should successfully execute a dry-run of the workflow.
+
+#configfile: "config.yaml"
+#report: "report/workflow.rst"
+
+# Allow users to fix the underlying OS via singularity.
+#singularity: "docker://continuumio/miniconda3"
+
+rule all:
+    input:
+        expand("output/{sample}_{replicon}.wig", sample=SAMPLES, replicon=REPLICONS),
+        "output/MAC109_raw_counts.csv",
+        "output/LPI_sites.csv",
+        "output/Attenuated_Mutants_MAC109.csv"
+
+        # Subsequent target rules can be specified below. They should start with all_*.
+
+rule map_reads:
+    conda:
+        "envs/tpp_env.yml"
+    input:
+        "input/MAC109.fa",
+        "input/{sample}_1.fastq",
+        "input/{sample}_2.fastq"
+    output:
+        expand("output/{{sample}}_{replicon}.wig", replicon=REPLICONS)
+    shell:
+        #Compute bwa location to give to tpp
+        "BWA=$(which bwa)\n"+
+        "echo $BWA\n"+
+        "tpp -himar1 -bwa $BWA -bwa-alg aln -ref {input[0]} -replicon-ids "+','.join(REPLICONS)+" -reads1 {input[1]} -reads2 {input[2]} -window-size 6 -primer AACCTGTTA -mismatches 2 -output output/{wildcards.sample}"
+
+rule convert_to_csv:
+    conda:
+        "envs/tpp_env.yml"
+    input:
+        "input/MAC109.gb",
+        expand("output/{sample}_{replicon}.wig", sample=SAMPLES, replicon=REPLICONS)
+    output:
+        "output/MAC109_raw_counts.csv" 
+    shell:
+        "python2 scripts/wig_gb_to_csv.py -l output/PREFIXES_FOR_CONVERSION.txt -g {input[0]} -u locus_tag -f product regulatory_class bound_moiety -o {output}"
+
+#Run find_lpi_sites.py
+rule find_lpi_sites:
+    conda:
+        "envs/tpp_env.yml"
+    input:
+        "input/MAC109.gb"
+    output:
+        "output/LPI_sites.csv"
+    shell:
+        "python2 scripts/find_lpi_sites.py"
+
+rule run_tifa:
+    conda:
+        "envs/tifa.yml"
+    input:
+        "output/MAC109_raw_counts.csv" 
+    output:
+        "output/Attenuated_Mutants_MAC109.csv"
+    shell:
+        "python3 scripts/tifa.py"
+
+#include: "rules/other.smk"
