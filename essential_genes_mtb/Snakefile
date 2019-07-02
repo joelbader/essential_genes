@@ -1,5 +1,6 @@
 # The main entry point of your workflow.
-SAMPLES = ['SRR4113427','SRR4113428','SRR4113429','SRR4113430','SRR4113431','SRR4113432','SRR4113433','SRR4113434','SRR4113435','SRR4113436','SRR4113437','SRR4113438','SRR4113438','SRR4113439','SRR4113440']
+SAMPLES = ['SRR4113427','SRR4113428','SRR4113429','SRR4113430','SRR4113431','SRR4113432','SRR4113433','SRR4113434','SRR4113435','SRR4113436','SRR4113437','SRR4113438','SRR4113439','SRR4113440']
+SWAP_PAIR_SAMPLES = ['SRR4113428', 'SRR4113430', 'SRR4113434', 'SRR4113438', 'SRR4113439', 'SRR4113440']
 #SAMPLES = ['Test1','Test2']
 REPLICONS = ['AL123456'] #Order of these affects the order they are printed.
 
@@ -35,7 +36,11 @@ rule map_reads:
         #Compute bwa location to give to tpp
         "BWA=$(which bwa)\n"+
         "echo $BWA\n"+
-        "tpp -himar1 -bwa $BWA -bwa-alg aln -ref {input[0]} -replicon-ids "+','.join(REPLICONS)+" -reads1 {input[1]} -reads2 {input[2]} -window-size 6 -primer AACCTGTTA -mismatches 1 -output output/{wildcards.sample}"
+        if {sample} in SWAP_PAIR_SAMPLES:
+            #If the order or the _1 and _2 paired reads should be swapped for tpp.
+            "tpp -himar1 -bwa $BWA -bwa-alg aln -ref {input[0]} -replicon-ids "+','.join(REPLICONS)+" -reads1 {input[2]} -reads2 {input[1]} -window-size 6 -primer AACCTGTTA -mismatches 1 -output output/{wildcards.sample}"
+        else:
+            "tpp -himar1 -bwa $BWA -bwa-alg aln -ref {input[0]} -replicon-ids "+','.join(REPLICONS)+" -reads1 {input[1]} -reads2 {input[2]} -window-size 6 -primer AACCTGTTA -mismatches 1 -output output/{wildcards.sample}"
 
 rule convert_to_csv:
     conda:
