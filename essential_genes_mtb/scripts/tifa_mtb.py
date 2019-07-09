@@ -17,8 +17,9 @@ def main():
     
     #Initializations
     c_df = pd.read_csv(csv,dtype={'regulatory_class':str,'bound_moiety':str})
+    print(c_df)
 
-    samp_names = c_df.columns.values[4:]
+    samp_names = c_df.columns.values[6:]
 
     #Rename columns for ease of use and compatibility
     c_df = c_df.rename(columns={'unique_identifier (locus_tag or record_id_start_end_strand)':'uid'})
