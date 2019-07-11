@@ -83,6 +83,6 @@ dependencies:
   - pip:
     - pypubsub==3.3.0
     - scipy==1.2.2
-    - tnseq-transit==2.4.0
+    - tnseq-transit==2.4.1
 prefix: /home/will/src_and_bin/Other_Software/miniconda3/envs/tpp_env
 
