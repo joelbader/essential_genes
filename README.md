@@ -26,8 +26,8 @@ If you simply want to use this workflow, download and extract the [latest releas
 
 If using singularity you will need to run the following commands in order to build the necessary image file:
 
-cd singularity\_container
-sudo singularity build conda\_smake.simg conda\_smake\_recipe.txt
+    cd singularity\_container
+    sudo singularity build conda\_smake.simg conda\_smake\_recipe.txt
 
 ### Step 3: Execute workflow
 Change directory to essential\_genes\_mav or essential\_genes\_mtb.
