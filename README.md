@@ -18,7 +18,7 @@ For simplicity I have also provided a singularity container (https://sylabs.io/s
 
 ## Raw Data
 
-You will need to download a number of data files and place them into the corresponding input folders. A list of commands using the SRA Toolkit is provided in each input folder as a guide for how to download .fastq files from SRA. Genbank files (.gb, .gbff) along with corresponding FASTA files (.fa, .fna) can be downloaded at ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/003/408/535/GCA\_003408535.1\_ASM340853v1 and ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/195/955/GCA\_000195955.2\_ASM19595v2. You will need to rename the files to use the prefix MAC109 and H37Rv. The expected file names are:
+You will need to download a number of data files and place them into the corresponding input folders. A list of commands using the SRA Toolkit is provided in each input folder as a guide for how to download .fastq files from SRA. Genbank files (.gb, .gbff) along with corresponding FASTA files (.fa, .fna) can be downloaded at ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/003/408/535/GCA_003408535.1_ASM340853v1 and ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/195/955/GCA_000195955.2_ASM19595v2. You will need to rename the files to use the prefix MAC109 and H37Rv. The expected file names are:
 
     essential_genes_mav/input/MAC109.fa
     essential_genes_mav/input/MAC109.gb
