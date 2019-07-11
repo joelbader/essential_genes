@@ -45,7 +45,7 @@ See the [Snakemake documentation](https://snakemake.readthedocs.io/en/stable/exe
 
 If using singularity:
 
-    singularity exec ../singularity\_container/conda\_smake.simg snakemake -j --use-conda
+    singularity exec ../singularity_container/conda_smake.simg snakemake -j --use-conda
 
 ## Report Issue
 If you have any questions or issues reproducing our results please send me an email at maternwill@gmail.com.
