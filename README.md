@@ -2,7 +2,7 @@
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥3.12.0-brightgreen.svg)](https://snakemake.bitbucket.io)
 
-This workflow, using Snakemake, seeks to reproduce our results presented in our upcoming paper: "Identifying the essential genes of Mycobacterium avium subsp. hominissuis with Tn-Seq using a rank-based, frequentist approach." Following the steps below should allow you to get identical results to what we reported in our paper.
+This workflow, using Snakemake, seeks to reproduce our results presented in our upcoming paper: "Identifying the essential genes of Mycobacterium avium subsp. hominissuis with Tn-Seq using a rank-based filter procedure." Following the steps below should allow you to get identical results to what we reported in our paper.
 
 ## Authors
 
@@ -14,11 +14,12 @@ You will need to install the following packages (and their dependencies) in orde
 * snakemake (tested with version: 5.5.1)
 * conda (tested with version: 4.6.14)
 
-For simplicity I have also provided a singularity container (https://sylabs.io/singularity/) build script that can be used to run these workflows in any environment where singularity is installed (e.g. your local cluster). Note that you will need root access to build the singularity container from the provided recipe (see: https://sylabs.io/guides/3.0/user-guide/build_a_container.html).
+For simplicity I have also provided a singularity container (https://sylabs.io/singularity/) build script that can be used to run these workflows in any environment where singularity is installed (e.g. your local cluster). The container automatically provides snakemake and conda. Note that you will need root access to build the singularity container from the provided recipe (see: https://sylabs.io/guides/3.0/user-guide/build_a_container.html).
 
 ## Raw Data
 
-You will need to download a number of data files and place into the corresponding input folders. A list of commands using the SRA Toolkit is provided in each input/ folder as a guide for how to download .fastq files from SRA. Genbank files (.gb, .gbff) along with corresponding FASTA files (.fa, .fna) can be downloaded [here](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/003/408/535/GCA_003408535.1_ASM340853v1) and [here](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/195/955/GCA_000195955.2_ASM19595v2). You will need to rename the files to use the prefix MAC109 and H37Rv. The expected file names are:
+You will need to download a number of data files and place them into the corresponding input folders. A list of commands using the SRA Toolkit is provided in each input folder as a guide for how to download .fastq files from SRA. Genbank files (.gb, .gbff) along with corresponding FASTA files (.fa, .fna) can be downloaded [here](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/003/408/535/GCA_003408535.1_ASM340853v1) and [here](ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/195/955/GCA_000195955.2_ASM19595v2). You will need to rename the files to use the prefix MAC109 and H37Rv. The expected file names are:
+
     essential_genes_mav/input/MAC109.fa
     essential_genes_mav/input/MAC109.gb
     essential_genes_mav/input/SRX5532235_1.fastq
