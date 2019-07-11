@@ -44,6 +44,7 @@ Execute the workflow via
 See the [Snakemake documentation](https://snakemake.readthedocs.io/en/stable/executable.html) for further details.
 
 If using singularity:
+
     singularity exec ../singularity\_container/conda\_smake.simg snakemake -j --use-conda
 
 ## Report Issue
