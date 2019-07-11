@@ -14,7 +14,7 @@ You will need to install the following packages (and their dependencies) in orde
 * snakemake (tested with version: 5.5.1)
 * conda (tested with version: 4.6.14)
 
-For simplicity I have also provided a singularity container (https://sylabs.io/singularity/) build script that can be used to run these workflows in any environment where singularity is installed (e.g. your local cluster). Note that you will need root access to build the singularity container from the provided recipe (see: https://sylabs.io/guides/3.0/user-guide/build\_a\_container.html).
+For simplicity I have also provided a singularity container (https://sylabs.io/singularity/) build script that can be used to run these workflows in any environment where singularity is installed (e.g. your local cluster). Note that you will need root access to build the singularity container from the provided recipe (see: https://sylabs.io/guides/3.0/user-guide/build_a_container.html).
 
 ## Usage
 
@@ -24,7 +24,7 @@ If you simply want to use this workflow, download and extract the [latest releas
 
 ### Step 2: Build Singularity container
 
-If using singularity you will need to run the following command in order to build the necessary image file:
+If using singularity you will need to run the following commands in order to build the necessary image file:
 
 cd singularity\_container
 sudo singularity build conda\_smake.simg conda\_smake\_recipe.txt
