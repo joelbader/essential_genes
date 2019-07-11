@@ -1,79 +1,50 @@
 # Snakemake workflow: Tn-seq
 
 [![Snakemake](https://img.shields.io/badge/snakemake-≥3.12.0-brightgreen.svg)](https://snakemake.bitbucket.io)
-[![Build Status](https://travis-ci.org/snakemake-workflows/tn-seq.svg?branch=master)](https://travis-ci.org/snakemake-workflows/tn-seq)
 
-This is the template for a new Snakemake workflow. Replace this text with a comprehensive description covering the purpose and domain.
-Insert your code into the respective folders, i.e. `scripts`, `rules`, and `envs`. Define the entry point of the workflow in the `Snakefile` and the main configuration in the `config.yaml` file.
+This workflow, using Snakemake, seeks to reproduce our results presented in our upcoming paper: "Identifying the essential genes of Mycobacterium avium subsp. hominissuis with Tn-Seq using a rank-based, frequentist approach." Following the steps below should allow you to get identical results to what we reported in our paper.
 
 ## Authors
 
 * William Matern (@wmatern)
 
+## Dependencies
+
+You will need to install the following packages (and their dependencies) in order to run this workflow:
+* snakemake (tested with version: 5.5.1)
+* conda (tested with version: 4.6.14)
+
+For simplicity I have also provided a singularity container (https://sylabs.io/singularity/) build script that can be used to run these workflows in any environment where singularity is installed (e.g. your local cluster). Note that you will need root access to build the singularity container from the provided recipe (see: https://sylabs.io/guides/3.0/user-guide/build\_a\_container.html).
+
 ## Usage
 
-### Simple
-
-#### Step 1: Install workflow
+### Step 1: Download workflow
 
 If you simply want to use this workflow, download and extract the [latest release](https://github.com/snakemake-workflows/tn-seq/releases).
-If you intend to modify and further extend this workflow or want to work under version control, fork this repository as outlined in [Advanced](#advanced). The latter way is recommended.
 
-In any case, if you use this workflow in a paper, don't forget to give credits to the authors by citing the URL of this repository and, if available, its DOI (see above).
+### Step 2: Build Singularity container
 
-#### Step 2: Configure workflow
+If using singularity you will need to run the following command in order to build the necessary image file:
 
-Configure the workflow according to your needs via editing the file `config.yaml`.
+cd singularity\_container
+sudo singularity build conda\_smake.simg conda\_smake\_recipe.txt
 
-#### Step 3: Execute workflow
+### Step 3: Execute workflow
+Change directory to essential\_genes\_mav or essential\_genes\_mtb.
 
-Test your configuration by performing a dry-run via
+If using conda + snakemake:
+Test your configuration by performing a dry-run via:
 
     snakemake --use-conda -n
 
-Execute the workflow locally via
+Execute the workflow via
 
-    snakemake --use-conda --cores $N
+    snakemake --use-conda -j
 
-using `$N` cores or run it in a cluster environment via
-
-    snakemake --use-conda --cluster qsub --jobs 100
-
-or
-
-    snakemake --use-conda --drmaa --jobs 100
-
-If you not only want to fix the software stack but also the underlying OS, use
-
-    snakemake --use-conda --use-singularity
-
-in combination with any of the modes above.
 See the [Snakemake documentation](https://snakemake.readthedocs.io/en/stable/executable.html) for further details.
 
-# Step 4: Investigate results
+If using singularity:
+singularity exec ../singularity\_container/conda\_smake.simg snakemake -j --use-conda
 
-After successful execution, you can create a self-contained interactive HTML report with all results via:
-
-    snakemake --report report.html
-
-This report can, e.g., be forwarded to your collaborators.
-
-### Advanced
-
-The following recipe provides established best practices for running and extending this workflow in a reproducible way.
-
-1. [Fork](https://help.github.com/en/articles/fork-a-repo) the repo to a personal or lab account.
-2. [Clone](https://help.github.com/en/articles/cloning-a-repository) the fork to the desired working directory for the concrete project/run on your machine.
-3. [Create a new branch](https://git-scm.com/docs/gittutorial#_managing_branches) (the project-branch) within the clone and switch to it. The branch will contain any project-specific modifications (e.g. to configuration, but also to code).
-4. Modify the config, and any necessary sheets (and probably the workflow) as needed.
-5. Commit any changes and push the project-branch to your fork on github.
-6. Run the analysis.
-7. Optional: Merge back any valuable and generalizable changes to the [upstream repo](https://github.com/snakemake-workflows/tn-seq) via a [**pull request**](https://help.github.com/en/articles/creating-a-pull-request). This would be **greatly appreciated**.
-8. Optional: Push results (plots/tables) to the remote branch on your fork.
-9. Optional: Create a self-contained workflow archive for publication along with the paper (snakemake --archive).
-10. Optional: Delete the local clone/workdir to free space.
-
-
-## Testing
-
-Tests cases are in the subfolder `.test`. They are automtically executed via continuous integration with Travis CI.
+## Report Issue
+If you have any questions or issues reproducing our results please send me an email at maternwill@gmail.com.
