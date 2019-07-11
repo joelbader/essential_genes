@@ -32,7 +32,7 @@ If using singularity you will need to run the following commands in order to bui
 ### Step 3: Execute workflow
 Change directory to essential\_genes\_mav or essential\_genes\_mtb.
 
-If using conda + snakemake:
+If not using singularity:
 Test your configuration by performing a dry-run via:
 
     snakemake --use-conda -n
@@ -44,7 +44,7 @@ Execute the workflow via
 See the [Snakemake documentation](https://snakemake.readthedocs.io/en/stable/executable.html) for further details.
 
 If using singularity:
-singularity exec ../singularity\_container/conda\_smake.simg snakemake -j --use-conda
+    singularity exec ../singularity\_container/conda\_smake.simg snakemake -j --use-conda
 
 ## Report Issue
 If you have any questions or issues reproducing our results please send me an email at maternwill@gmail.com.
