@@ -7,6 +7,7 @@ This workflow, using Snakemake, seeks to reproduce our results presented in our 
 ## Authors
 
 * William Matern (@wmatern)
+* Robert Jenquin (@robertjenquin)
 
 ## Dependencies
 
