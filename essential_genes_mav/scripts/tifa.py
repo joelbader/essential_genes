@@ -37,7 +37,7 @@ def main():
 
     #Names of samples to process for essential gene detection
     prefix = 'read_count ('
-    samp_names = [prefix+'SRX5532235)',prefix+'SRX5532236)',prefix+'SRX5532237)',prefix+'SRX5532238)',prefix+'SRX5532239)']
+    samp_names = [prefix+'SRX5532236)',prefix+'SRX5532237)',prefix+'SRX5532238)',prefix+'SRX5532239)',prefix+'SRX5532235)']
 
     #Define location of special site files
     special_site_files = ['output/LPI_sites.csv']
