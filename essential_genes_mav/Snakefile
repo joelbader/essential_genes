@@ -1,5 +1,5 @@
 # The main entry point of your workflow.
-SAMPLES = ['SRX5532235','SRX5532236','SRX5532237','SRX5532238','SRX5532239']
+SAMPLES = ['SRX5532236','SRX5532237','SRX5532238','SRX5532239','SRX5532235']
 #SAMPLES = ['Test1','Test2','Test3','Test4','Test5']
 REPLICONS = ['CP029332','CP029333','CP029334'] #Order of these affects the order they are printed.
 
