@@ -284,12 +284,12 @@ def process_data(samp_names,c_df,special_site_files,out_fold,output_csv_name,plo
         temp_df.loc[temp_df['product'].isna(),'product'] = temp_df.loc[temp_df['product'].isna(),'product2']
 
     out_df = out_df.merge(temp_df[['contig','uid','product']],how='left',left_on='Gene',right_on='uid')
-    out_df = out_df.rename({'Gene':'Genomic Feature','product_y':'Genbank Annotation','pvalue':'pval (GD or GA)', 'pvalue_ess':'pval (ES)', 'Adjusted p-value':'padj (GD or GA)','Adjusted p-value (Ess)':'padj (ES)','Group':'TIFA Prediction','Relative Fitness':'Relative Fitness of Mutant','contig':'Contig'},axis=1)
-    out_df = out_df[['Genomic Feature','Genbank Annotation','Contig','Relative Fitness of Mutant','pval (GD or GA)','padj (GD or GA)','pval (ES)','padj (ES)','TIFA Prediction']] #Change order of columns
+    out_df = out_df.rename({'Gene':'Genomic Feature','product_y':'Genbank Annotation','pvalue':'pval (GD or GA)', 'pvalue_ess':'pval (ES)', 'Adjusted p-value':'padj (GD or GA)','Adjusted p-value (Ess)':'padj (ES)','Group':'Prediction','Relative Fitness':'Relative Fitness of Mutant','contig':'Contig'},axis=1)
+    out_df = out_df[['Genomic Feature','Genbank Annotation','Contig','Relative Fitness of Mutant','pval (GD or GA)','padj (GD or GA)','pval (ES)','padj (ES)','Prediction']] #Change order of columns
     out_df.to_csv(out_fold+output_csv_name,index=False)
 
-    raw_df = c_df.merge(out_df[['Genomic Feature','TIFA Prediction','Genbank Annotation']],left_on = 'uid',right_on='Genomic Feature',how='left')
-    raw_df = raw_df[['contig','insertion_site','uid','product'] + name_ls + ['TIFA Prediction']]
+    raw_df = c_df.merge(out_df[['Genomic Feature','Prediction','Genbank Annotation']],left_on = 'uid',right_on='Genomic Feature',how='left')
+    raw_df = raw_df[['contig','insertion_site','uid','product'] + name_ls + ['Prediction']]
     raw_df = raw_df.rename({**{'uid':'Genomic Feature','product':'Genbank Protein Annotation','insertion_site':'Insertion Site','contig':'Contig'},**dict(zip(name_ls,['TnPool'+str(i+1)+' Read Count' for i in range(N)]))},axis=1)
     raw_df.to_csv(out_fold+'Merged_raw_data.csv',index=False)
 
